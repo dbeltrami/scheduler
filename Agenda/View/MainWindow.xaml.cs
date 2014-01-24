@@ -24,8 +24,9 @@ namespace Agenda
         {
             InitializeComponent();
             WeekGrid(49,8);
-            MonthGrid();
+            MonthGrid(49, 8);
             //yearGrid();
+
         }
 
         private void WeekGrid(int rowNumber , int columnNumber)
@@ -151,11 +152,39 @@ namespace Agenda
             week.Content = DynamicGrid;
         }
 
-        private void MonthGrid()
+        private void MonthGrid(int rowNumber, int columnNumber)
         {
-            DataGrid gridIndo = new DataGrid();
+            DataGrid monthGrid = new DataGrid();
+            monthGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
+            monthGrid.VerticalAlignment = VerticalAlignment.Stretch;
+            monthGrid.Background = new SolidColorBrush(Colors.LightSteelBlue);
+            
+            DataGridTextColumn lundi = new DataGridTextColumn();
+            lundi.Header = "Lundi";
+            DataGridTextColumn mardi = new DataGridTextColumn();
+            mardi.Header = "Mardi";
+            DataGridTextColumn mercredi = new DataGridTextColumn();
+            mercredi.Header = "Mercredi";
+            DataGridTextColumn jeudi = new DataGridTextColumn();
+            jeudi.Header = "Jeudi";
+            DataGridTextColumn vendredi = new DataGridTextColumn();
+            vendredi.Header = "Vendredi";
+            DataGridTextColumn samedi = new DataGridTextColumn();
+            samedi.Header = "Samedi";
+            DataGridTextColumn dimanche = new DataGridTextColumn();
+            dimanche.Header = "Dimanche";
+
+            monthGrid.Columns.Add(lundi);
+            monthGrid.Columns.Add(mardi);
+            monthGrid.Columns.Add(mercredi);
+            monthGrid.Columns.Add(jeudi);
+            monthGrid.Columns.Add(vendredi);
+            monthGrid.Columns.Add(samedi);
+            monthGrid.Columns.Add(dimanche);
 
 
+            month.Content = monthGrid;
+            
         }
     }
 }
