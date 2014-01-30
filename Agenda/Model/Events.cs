@@ -44,26 +44,31 @@ namespace Agenda.Model
         }
 
 
-        public static Events getEvent(int id)
+        //public static Events getEvent(int id)
+        public async Task getEvent(int id)
         {
-            Events unEvent = new Events();
+            //using (var webClient = new System.Net.WebClient())
+            //{
+            //    // var json = webClient.DownloadString("http://82.236.45.188/AgendaWS/events/"+id);
+            //    //JObject jObject = JObject.Parse(json);
+            //    //JToken jEvent = jObject;
+            //    //unEvent.name = (string)jEvent["name"];
+            //    //unEvent.description = (string)jEvent["description"];
+            //    //unEvent.type = (string)jEvent["type"];
+            //}
 
-            using (var webClient = new System.Net.WebClient())
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://82.236.45.188/AgendaWS/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = await client.GetAsync("events/" + id);
+            if (response.IsSuccessStatusCode)
             {
-                 var json = webClient.DownloadString("http://82.236.45.188/AgendaWS/events/"+id);
-                //var json = webClient.DownloadString("http://82.236.45.188/VroumVroum/users/1");
-                JObject jObject = JObject.Parse(json);
-                JToken jEvent = jObject;
-                unEvent.name = (string)jEvent["name"];
-                unEvent.description = (string)jEvent["description"];
-                //unEvent.lesParticipants =jEvent["participants"];
-                //unEvent.pointBegin = (DateTime.Now)jEvent["pointBegin"];
-                //unEvent.pointEnd = (DateTime)jEvent["pointEnd"];
-                //unEvent.period = (Periodicity)jEvent["periodicity"];
-                unEvent.type = (string)jEvent["type"];
+                Events theEvent = await response.Content.ReadAsAsync<Events>();
+                this.id = theEvent.id;
+                this.name = theEvent.name;
+                this.description = theEvent.description;
             }
-
-            return unEvent;
         }
         public static List<Events> getEvents()
         {
