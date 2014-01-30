@@ -12,12 +12,12 @@
             </Menu>            
         </ToolBarPanel>-->
         
-        <TabControl Margin="0,50,0,0" VerticalAlignment="Stretch">
+        <TabControl Name="tab" Margin="0,50,0,0" VerticalAlignment="Stretch">
             <TabItem Name="week"  Header="Semaine">
                 
             </TabItem>
-            <TabItem Header="Mois">
-                
+            <TabItem Name="month"  Header="Mois">
+
             </TabItem>
 
             <TabItem Header="Année">
