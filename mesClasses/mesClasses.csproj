@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="days.cs" />
+    <Compile Include="Days.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Meetings.cs" />
     <Compile Include="Periodicity.cs" />
