@@ -15,15 +15,17 @@ using System.Windows.Shapes;
 
 namespace Agenda
 {
-    /// <summary>
+    /// <summary>   
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        DataGrid dgv = new DataGrid();
+
         public MainWindow()
         {
             InitializeComponent();
-            WeekGrid(49,8);
+            WeekGrid(49,7);
             MonthGrid();
             //yearGrid();
         }
@@ -153,9 +155,62 @@ namespace Agenda
 
         private void MonthGrid()
         {
-            DataGrid gridIndo = new DataGrid();
-
-
+             
+            dgv.AllowUserToAddRows = false;
+            dgv.AllowUserToDeleteRows = false;
+            dgv.AllowUserToResizeRows = false;
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            dgv.EditMode = DataGridViewEditMode.EditOnKeystroke;
+            dgv.ShowEditingIcon = false;
+            dgv.Location = new System.Drawing.Point(0, 0);
+            dgv.Name = "dataGridView1";
+            dgv.Size = new System.Drawing.Size(250, 125);
+            dgv.TabIndex = 0;
+            dgv.RowHeadersWidth = 55;
+            //used to attach event-handlers to the events of the editing control(nice name!)
+            //dgv.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(Mydgv_EditingControlShowing);
+            // not implemented here, but I still like the name DataGridViewEditingControlShowingEventHandler :o) LOL
+            dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgv.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            for (int i = 0; i < 7; i++)
+            {
+                AddAColumn(i);
+            }
+            dgv.RowHeadersDefaultCellStyle.Padding = new Padding(3);//helps to get rid of the selection triangle?
+            for (int i = 0; i < 6; i++)
+            {
+                AddARow(i);
+            }
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.Gainsboro;
+            dgv.RowHeadersDefaultCellStyle.Font = new Font("Verdana", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            dgv.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.RowHeadersDefaultCellStyle.BackColor = Color.Gainsboro;
+        }
+        private void AddARow(int i)
+        {
+            DataGridRow Arow = new DataGridRow();
+            Arow.HeaderCell.Value = i.ToString();
+            dgv.Rows.Add(Arow);
+        }
+        private void AddAColumn(int i)
+        {
+            DataGridViewTextBoxColumn Acolumn = new DataGridViewTextBoxColumn();
+            //OK I know this only works normally for 26 chars(columns)
+            // I leave the rest of the Excel columns up to you to figure out :o)
+            char ch = (char)(i + 65);
+            Acolumn.HeaderText = ch.ToString();
+            Acolumn.Name = "Column" + i.ToString();
+            Acolumn.Width = 60;
+            Acolumn.SortMode = DataGridViewColumnSortMode.NotSortable;
+            //make a Style template to be used in the grid
+            DataGridViewCell Acell = new DataGridViewTextBoxCell();
+            Acell.Style.BackColor = Color.LightCyan;
+            Acell.Style.SelectionBackColor = Color.FromArgb(128, 255, 255);
+            Acolumn.CellTemplate = Acell;
+            dgv.Columns.Add(Acolumn);
         }
     }
 }
